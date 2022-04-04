@@ -1,0 +1,17 @@
+-- Teacher table with sequence to increment an id
+
+CREATE TABLE teacher(
+	id numeric(8) NOT NULL,
+	login varchar(16),
+	name varchar(32),
+	surname varchar(32) NOT NULL,
+	title varchar(25),
+	PRIMARY KEY(id)
+);
+
+CREATE SEQUENCE teacher_seq
+START 1
+INCREMENT 1
+OWNED BY teacher.id;
+
+--------------------------------------------------------------
