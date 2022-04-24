@@ -1,17 +1,32 @@
 -- Teacher table with sequence to increment an id
 
-CREATE TABLE teacher(
+CREATE TABLE employee(
 	id numeric(8) NOT NULL,
-	login varchar(16) NOT NULL,
-	name varchar(32),
-	surname varchar(32) NOT NULL,
-	title varchar(25),
-	PRIMARY KEY(id)
+	login varchar(24) NOT NULL,
+	name varchar(16),
+	surname varchar(24) NOT NULL,
+	job varchar(32),
+	serial_number varchar(22) NOT NULL,
+
+	PRIMARY KEY (id)
 );
 
-CREATE SEQUENCE teacher_seq
+CREATE SEQUENCE employee_seq
 START 1
 INCREMENT 1
-OWNED BY teacher.id;
+OWNED BY employee.id;
 
+ALTER TABLE employee
+ADD CONSTRAINT fk_login FOREIGN KEY (login) REFERENCES credentials (employeeLogin);
+
+--------------------------------------------------------------
+
+------------------------ credentials -------------------------
+CREATE TABLE credentials(
+	employeeLogin varchar(24) NOT NULL,
+	password varchar(24) NOT NULL,
+	isAdmin boolean,
+
+	PRIMARY KEY (employeeLogin)
+);
 --------------------------------------------------------------
