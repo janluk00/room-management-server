@@ -8,5 +8,4 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     Optional<Employee> findEmployeeByLogin(String login);
     Boolean existsByLogin(String login);
-    void deleteByLogin(String login);
 }
