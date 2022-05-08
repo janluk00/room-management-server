@@ -1,6 +1,5 @@
 package pl.jandom.roomanager.employee;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,13 +7,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/employee") /* localhost:8080/employee */
+@RequestMapping("/employees") /* localhost:8080/employee */
 public class EmployeeController {
     private final EmployeeService employeeService;
 
     @Autowired
-    public EmployeeController(EmployeeService teacherService) {
-       this.employeeService = teacherService;
+    public EmployeeController(EmployeeService employeeService) {
+       this.employeeService = employeeService;
     }
 
     @GetMapping("/list")

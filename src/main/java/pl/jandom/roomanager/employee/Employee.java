@@ -1,10 +1,11 @@
 package pl.jandom.roomanager.employee;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.jandom.roomanager.reservations.Reservation;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -22,6 +23,9 @@ public class Employee {
     private String job;
     @Column(name = "serial_number")
     private String serialNumber;
+    @OneToMany
+    @JoinColumn(name = "emp_id")
+    private Set<Reservation> reservations;
 
     public Employee(String login, String name, String surname, String job, String serialNumber) {
         this.login = login;
