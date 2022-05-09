@@ -2,7 +2,6 @@ package pl.jandom.roomanager.credentials;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.jandom.roomanager.employee.Employee;
 
 import java.util.List;
 import java.util.Optional;

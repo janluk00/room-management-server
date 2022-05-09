@@ -1,4 +1,4 @@
-package pl.jandom.roomanager.reservations;
+package pl.jandom.roomanager.reservation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,6 +7,7 @@ import java.util.List;
 
 @Service
 public class ReservationService {
+
     @Autowired
     ReservationRepository reservationRepository;
 

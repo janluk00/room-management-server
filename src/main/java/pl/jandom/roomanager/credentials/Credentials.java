@@ -8,11 +8,11 @@ import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table
 public class Credentials {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id")
     private Long employeeId;
     @Column(name = "employee_login")

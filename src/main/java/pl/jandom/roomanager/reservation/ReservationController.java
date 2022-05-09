@@ -1,4 +1,4 @@
-package pl.jandom.roomanager.reservations;
+package pl.jandom.roomanager.reservation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/reservations")
+@RequestMapping("/reservations")
 public class ReservationController {
     private final ReservationService reservationService;
 

@@ -1,4 +1,4 @@
-package pl.jandom.roomanager.reservations;
+package pl.jandom.roomanager.reservation;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
