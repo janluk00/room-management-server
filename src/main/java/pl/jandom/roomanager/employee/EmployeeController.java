@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/employees") /* localhost:8080/employee */
+@RequestMapping("/employees") /* localhost:8080/employees */
 public class EmployeeController {
     private final EmployeeService employeeService;
 

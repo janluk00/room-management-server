@@ -17,7 +17,7 @@ public class CredentialsController {
         this.credentialsService = credentialsService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/list")
     public List<Credentials> findAllCredentials(){
         return credentialsService.findAllCredentials();
     }
