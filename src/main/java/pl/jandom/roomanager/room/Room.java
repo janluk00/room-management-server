@@ -3,11 +3,10 @@ package pl.jandom.roomanager.room;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.jandom.roomanager.reservation.Reservation;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +20,9 @@ public class Room {
     private Long level;
     private Long capacity;
     private String type;
+    @OneToMany
+    @JoinColumn(name = "room_id")
+    private List<Reservation> reservations;
 
     public Room(Long level, Long capacity, String type) {
         this.level = level;

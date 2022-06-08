@@ -2,7 +2,6 @@ package pl.jandom.roomanager.employee;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.jandom.roomanager.credentials.Credentials;
 import pl.jandom.roomanager.reservation.Reservation;
 
 import javax.persistence.*;
@@ -23,6 +22,8 @@ public class Employee {
     private String job;
     @Column(name = "serial_number")
     private String serialNumber;
+    @Column(name = "is_male")
+    private Boolean isMale;
     @OneToMany
     @JoinColumn(name = "emp_id")
     private List<Reservation> reservations;

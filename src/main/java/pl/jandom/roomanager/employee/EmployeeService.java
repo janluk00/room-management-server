@@ -9,6 +9,9 @@ import java.util.Optional;
 
 @Service
 public class EmployeeService {
+    public static final String EMPLOYEE_LOGIN_NOT_FOUND = "Pracownik o loginie %s nie zostal znaleziony!";
+    public static final String EMPLOYEE_ID_NOT_FOUND = "Pracownik o id %d nie zostal znaleziony!";
+    public static final String EMPLOYEE_LOGIN_TAKEN = "Ten login jest juz zajety!";
 
     @Autowired
     EmployeeRepository employeeRepository;
@@ -22,7 +25,7 @@ public class EmployeeService {
                 .findEmployeeByLogin(newEmployee.getLogin());
 
         if (employeeTestEmail.isPresent()){
-            throw new IllegalStateException("Ten login jest zajety!");
+            throw new IllegalStateException(EMPLOYEE_LOGIN_TAKEN);
         }
 
         employeeRepository.save(newEmployee);
@@ -34,7 +37,7 @@ public class EmployeeService {
 
         if(optionalEmployee.isEmpty()){
             throw new IllegalStateException(
-                    "Pracownik o loginie " + login + " nie zostal znaleziony" );
+                    String.format(EMPLOYEE_LOGIN_NOT_FOUND, login));
         }
 
         return employeeRepository.findEmployeeByLogin(login);
@@ -44,7 +47,7 @@ public class EmployeeService {
         boolean isTeacherInDatabase = employeeRepository.existsById(id);
         if(!isTeacherInDatabase){
             throw new IllegalStateException(
-                    "Pracownik o id " + id + "nie ma w bazie danych!");
+                    String.format(EMPLOYEE_ID_NOT_FOUND, id));
         }
 
         employeeRepository.deleteById(id);
@@ -54,7 +57,8 @@ public class EmployeeService {
     public void updateEmployee(Long id, String name, String job){
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException(
-                        "Pracownik o id: " + id + " nie istnieje!"));
+                        String.format(EMPLOYEE_ID_NOT_FOUND, id)
+                ));
 
         if(name != null && name.length() > 0 &&
                 !name.equalsIgnoreCase(employee.getName())){
