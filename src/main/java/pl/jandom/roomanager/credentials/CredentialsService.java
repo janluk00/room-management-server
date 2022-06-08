@@ -3,10 +3,14 @@ package pl.jandom.roomanager.credentials;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.jandom.roomanager.employee.Employee;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+
+import static pl.jandom.roomanager.employee.EmployeeService.EMPLOYEE_LOGIN_NOT_FOUND;
+import static pl.jandom.roomanager.employee.EmployeeService.EMPLOYEE_LOGIN_TAKEN;
 
 @Service
 public class CredentialsService {
@@ -19,23 +23,23 @@ public class CredentialsService {
     }
 
     public void addNewCredentials(Credentials newCredentials){
-        Optional<Credentials> credentialsTestLogin = credentialsRepository
+        Credentials credentialsTestLogin = credentialsRepository
                 .findCredentialsByEmployeeLogin(newCredentials.getEmployeeLogin());
 
-        if (credentialsTestLogin.isPresent()){
-            throw new IllegalStateException("Ten login jest juz zajety!");
+        if (credentialsTestLogin != null){
+            throw new IllegalStateException(EMPLOYEE_LOGIN_TAKEN);
         }
 
         credentialsRepository.save(newCredentials);
     }
 
-    public Optional<Credentials> findCredentialsByLogin(String login){
-        Optional<Credentials> optionalCredentials = credentialsRepository
-                .findCredentialsByEmployeeLogin(login);
+    public Credentials findCredentialsByLogin(String login){
+        Credentials credentials = credentialsRepository
+               .findCredentialsByEmployeeLogin(login);
 
-        if(optionalCredentials.isEmpty()){
-            throw new IllegalStateException(
-                    "Uzytkownik o loginie " + login + " nie zostal znaleziony" );
+        if(credentials == null){
+           throw new IllegalStateException(
+                    String.format(EMPLOYEE_LOGIN_NOT_FOUND, login));
         }
 
         return credentialsRepository.findCredentialsByEmployeeLogin(login);
@@ -43,11 +47,13 @@ public class CredentialsService {
 
     @Transactional
     public void updatePassword(String login, String password){
-        Credentials credentials = credentialsRepository.findCredentialsByEmployeeLogin(login)
-                .orElseThrow(() -> new IllegalStateException(
-                        "Uzytkownik o loginie: " + login + " nie istenieje"));
+        Credentials credentials = credentialsRepository.findCredentialsByEmployeeLogin(login);
 
-        if(password != null && password.length() > 0 &&
+        if(credentials == null) {
+            throw new IllegalStateException(String.format(EMPLOYEE_LOGIN_NOT_FOUND, login));
+        }
+
+        else if(password != null && password.length() > 0 &&
         !password.equals(credentials.getPassword())){
             credentials.setPassword(password);
         }
@@ -55,13 +61,26 @@ public class CredentialsService {
 
     @Transactional
     public void removeCredentials(String login){
-        Credentials credentials = credentialsRepository.findCredentialsByEmployeeLogin(login)
-                .orElseThrow(() -> new IllegalStateException(
-                        "Uzytkownik o loginie: " + login + " nie znajduje sie w bazie danych!"
-                ));
+        Credentials credentials = credentialsRepository.findCredentialsByEmployeeLogin(login);
+
+        if(credentials == null) {
+            System.out.println(String.format(EMPLOYEE_LOGIN_NOT_FOUND, login));
+        }
 
         credentialsRepository.deleteByEmployeeLogin(login);
     }
 
+    public Boolean checkCorrectnessOfCredentials(String login, String password) {
+        Credentials credentials = credentialsRepository.findCredentialsByEmployeeLogin(login);
+        if(credentials == null){
+            return false;
+        }
+        boolean isCorrectPassword = password.equals(credentials.getPassword());
 
+        if(isCorrectPassword){
+            return true;
+        }
+
+        return false;
+    }
 }

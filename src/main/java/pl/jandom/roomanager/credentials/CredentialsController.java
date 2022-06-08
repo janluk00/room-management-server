@@ -23,8 +23,13 @@ public class CredentialsController {
     }
 
     @GetMapping("/{login}")
-    public Optional<Credentials> getEmployeeByLogin(@PathVariable("login") String login){
+    public Credentials getEmployeeByLogin(@PathVariable("login") String login){
         return credentialsService.findCredentialsByLogin(login);
+    }
+
+    @GetMapping("/checkCredentials/{login}/{password}")
+    public Boolean isCorrectLoginAndPassword(@PathVariable("login") String login, @PathVariable("password") String password){
+        return credentialsService.checkCorrectnessOfCredentials(login, password);
     }
 
     @PostMapping("/add")
