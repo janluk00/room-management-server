@@ -27,8 +27,9 @@ public class EmployeeService {
         if (employeeTestEmail.isPresent()){
             throw new IllegalStateException(EMPLOYEE_LOGIN_TAKEN);
         }
-
-        employeeRepository.save(newEmployee);
+        else {
+            employeeRepository.save(newEmployee);
+        }
     }
 
     public Optional<Employee> findEmployeeByLogin(String login){
@@ -43,14 +44,16 @@ public class EmployeeService {
         return employeeRepository.findEmployeeByLogin(login);
     }
 
+    @Transactional
     public void deleteEmployeeById(Long id){
         boolean isTeacherInDatabase = employeeRepository.existsById(id);
         if(!isTeacherInDatabase){
             throw new IllegalStateException(
                     String.format(EMPLOYEE_ID_NOT_FOUND, id));
         }
-
-        employeeRepository.deleteById(id);
+        else {
+            employeeRepository.deleteEmployeeById(id);
+        }
     }
 
     @Transactional
