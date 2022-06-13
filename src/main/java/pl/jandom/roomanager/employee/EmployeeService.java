@@ -46,8 +46,8 @@ public class EmployeeService {
 
     @Transactional
     public void deleteEmployeeById(Long id){
-        boolean isTeacherInDatabase = employeeRepository.existsById(id);
-        if(!isTeacherInDatabase){
+        boolean isEmployeeInDatabase = employeeRepository.existsById(id);
+        if(!isEmployeeInDatabase){
             throw new IllegalStateException(
                     String.format(EMPLOYEE_ID_NOT_FOUND, id));
         }
@@ -57,7 +57,7 @@ public class EmployeeService {
     }
 
     @Transactional
-    public void updateEmployee(Long id, String name, String job){
+    public void updateEmployee(Long id, String name, String surname, String job){
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException(
                         String.format(EMPLOYEE_ID_NOT_FOUND, id)
@@ -66,6 +66,11 @@ public class EmployeeService {
         if(name != null && name.length() > 0 &&
                 !name.equalsIgnoreCase(employee.getName())){
             employee.setName(name);
+        }
+
+        if(surname != null && surname.length() > 0 &&
+                !surname.equalsIgnoreCase(employee.getSurname())){
+            employee.setJob(job);
         }
 
         if(job != null && job.length() > 0 &&
