@@ -1,10 +1,7 @@
 package pl.jandom.roomanager.room;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,4 +25,15 @@ public class RoomController {
     public Optional<Room> getRoomByNr(@PathVariable("nr") Long nr){
         return roomService.findRoomByNr(nr);
     }
+
+    @PostMapping("/add")
+    public void registerNewRoom(@RequestBody Room newRoom){
+        roomService.addNewRoom(newRoom);
+    }
+
+    @DeleteMapping("/delete/{nr}")
+    public void deleteRoom(@PathVariable("nr") Long nr){
+        roomService.removeRoomByNr(nr);
+    }
+
 }

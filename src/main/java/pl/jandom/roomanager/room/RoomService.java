@@ -27,4 +27,17 @@ public class RoomService {
         return roomRepository.findRoomByRoomNr(nr);
     }
 
+    public void addNewRoom(Room newRoom) {
+        roomRepository.save(newRoom);
+    }
+
+    public void removeRoomByNr(Long nr) {
+        boolean isRoomInDatabase = roomRepository.existsById(nr);
+
+        if(!isRoomInDatabase){
+            throw new IllegalStateException(String.format(ROOM_NR_NOT_FOUND, nr));
+        }
+
+        roomRepository.deleteById(nr);
+    }
 }
