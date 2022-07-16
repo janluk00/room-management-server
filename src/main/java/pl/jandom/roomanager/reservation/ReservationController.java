@@ -22,8 +22,8 @@ public class ReservationController {
         return reservationService.findAllReservations();
     }
 
-    @GetMapping("/{reservationId}")
-    public Optional<Reservation> getReservationById(@PathVariable("reservationId") Long id){
+    @GetMapping("/{id}")
+    public Optional<Reservation> getReservationById(@PathVariable("id") Long id){
         return reservationService.findReservationByID(id);
     }
 

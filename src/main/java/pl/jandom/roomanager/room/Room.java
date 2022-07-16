@@ -15,6 +15,7 @@ import java.util.List;
 @Table
 public class Room {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "room_nr")
     private Long roomNr;
     private Long level;
